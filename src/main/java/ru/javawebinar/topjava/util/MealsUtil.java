@@ -17,7 +17,7 @@ import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toList;
 
 public class MealsUtil {
-    private static final int DEFAULT_CALORIES_PER_DAY = 2000;
+    public static final int DEFAULT_CALORIES_PER_DAY = 2000;
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
         List<Meal> meals = Arrays.asList(
@@ -36,8 +36,6 @@ public class MealsUtil {
 
         System.out.println(getFilteredByCycle(meals, startTime, endTime, DEFAULT_CALORIES_PER_DAY));
         System.out.println(getFilteredByRecursion(meals, startTime, endTime, DEFAULT_CALORIES_PER_DAY));
-//        System.out.println(getFilteredByAtomic(meals, startTime, endTime, DEFAULT_CALORIES_PER_DAY));
-//        System.out.println(getFilteredByClosure(meals, startTime, endTime, DEFAULT_CALORIES_PER_DAY));
         System.out.println(getFilteredByExecutor(meals, startTime, endTime, DEFAULT_CALORIES_PER_DAY));
         System.out.println(getFilteredByFlatMap(meals, startTime, endTime, DEFAULT_CALORIES_PER_DAY));
         System.out.println(getFilteredByCollector(meals, startTime, endTime, DEFAULT_CALORIES_PER_DAY));
@@ -85,39 +83,6 @@ public class MealsUtil {
             result.add(createTo(meal, dailyCaloriesMap.get(meal.getDate()) > caloriesPerDay));
         }
     }
-
-/*
-        private static List<MealTo> getFilteredByAtomic(List<Meal> meals, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
-            Map<LocalDate, Integer> caloriesSumByDate = new HashMap<>();
-            Map<LocalDate, AtomicBoolean> exceededMap = new HashMap<>();
-
-            List<MealTo> mealsTo = new ArrayList<>();
-            meals.forEach(meal -> {
-                AtomicBoolean wrapBoolean = exceededMap.computeIfAbsent(meal.getDate(), date -> new AtomicBoolean());
-                Integer dailyCalories = caloriesSumByDate.merge(meal.getDate(), meal.getCalories(), Integer::sum);
-                if (dailyCalories > caloriesPerDay) {
-                    wrapBoolean.set(true);
-                }
-                if (TimeUtil.isBetween(meal.getTime(), startTime, endTime)) {
-                  mealsTo.add(createTo(meal, wrapBoolean));  // also change createWithExcess and MealTo.excess
-                }
-            });
-            return mealsTo;
-        }
-
-    private static List<MealTo> getFilteredByClosure(List<Meal> mealList, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
-        final Map<LocalDate, Integer> caloriesSumByDate = new HashMap<>();
-        List<MealTo> mealsTo = new ArrayList<>();
-        mealList.forEach(meal -> {
-                    caloriesSumByDate.merge(meal.getDate(), meal.getCalories(), Integer::sum);
-                    if (TimeUtil.isBetween(meal.getTime(), startTime, endTime)) {
-                        mealsTo.add(createTo(meal, () -> (caloriesSumByDate.get(meal.getDate()) > caloriesPerDay))); // also change createWithExcess and MealTo.excess
-                    }
-                }
-        );
-        return mealsTo;
-    }
-*/
 
     private static List<MealTo> getFilteredByExecutor(List<Meal> meals, LocalTime startTime, LocalTime endTime, int caloriesPerDay) throws InterruptedException, ExecutionException {
         Map<LocalDate, Integer> caloriesSumByDate = new HashMap<>();
@@ -185,7 +150,7 @@ public class MealsUtil {
         return values.stream().flatMap(identity()).collect(toList());
     }
 
-    private static MealTo createTo(Meal meal, boolean excess) {
-        return new MealTo(meal.getDateTime(), meal.getDescription(), meal.getCalories(), excess);
+    public static MealTo createTo(Meal meal, boolean excess) {
+        return new MealTo(meal.getId(), meal.getDateTime(), meal.getDescription(), meal.getCalories(), excess);
     }
 }
