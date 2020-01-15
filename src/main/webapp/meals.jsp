@@ -18,6 +18,23 @@
 </head>
 <body>
 <section>
+    <form method="post" action="meals?action=filter">
+        <dl>
+            <dt>DateAfter:</dt>
+            <dd><input id="1" type="date" name="dateAfter"></dd>
+            <dt>DateBefore:</dt>
+            <dd><input id="2" type="date" name="dateBefore"></dd>
+        </dl>
+        <dl>
+            <dt>TimeAfter:</dt>
+            <dd><input id="3" type="time" name="timeAfter"></dd>
+            <dt>TimeBefore:</dt>
+            <dd><input id="4" type="time" name="timeBefore"></dd>
+        </dl>
+        <button type="submit">Filter</button>
+    </form>
+</section>
+<section>
     <h3><a href="index.html">Home</a></h3>
     <hr/>
     <h2>Meals</h2>
@@ -34,7 +51,7 @@
         </tr>
         </thead>
         <c:forEach items="${meals}" var="meal">
-            <jsp:useBean id="meal" type="ru.javawebinar.topjava.model.MealTo"/>
+            <jsp:useBean id="meal" type="ru.javawebinar.topjava.to.MealTo"/>
             <tr class="${meal.excess ? 'excess' : 'normal'}">
                 <td>
                         <%--${meal.dateTime.toLocalDate()} ${meal.dateTime.toLocalTime()}--%>
@@ -50,5 +67,20 @@
         </c:forEach>
     </table>
 </section>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var ids = ["1", "2", "3", "4"];
+        for (var id of ids) {
+            var input = document.getElementById(id);
+            input.value = localStorage.getItem(id);
+            (function(id, input) {
+                input.addEventListener("change", function() {
+                    localStorage.setItem(id, input.value);
+                });
+            })(id, input);
+        }
+    });
+</script>
 </body>
 </html>

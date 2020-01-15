@@ -78,8 +78,36 @@
     </dependencies>
 
     <profiles>
+        <profile>
+            <id>jetty-run</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.eclipse.jetty</groupId>
+                        <artifactId>jetty-maven-plugin</artifactId>
+                        <version>9.2.19.v20160908</version>
+                        <configuration>
+                            <scanIntervalSeconds>10</scanIntervalSeconds>
+                            <webApp>
+                                <contextPath>/topjava</contextPath>
+                            </webApp>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>jetty-run</id>
+                                <phase>test</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
     </profiles>
 
     <dependencyManagement>
     </dependencyManagement>
+
 </project>
