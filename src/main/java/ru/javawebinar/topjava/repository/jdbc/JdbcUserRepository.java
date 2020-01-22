@@ -13,6 +13,8 @@ import ru.javawebinar.topjava.repository.UserRepository;
 
 import java.util.List;
 
+import static ru.javawebinar.topjava.util.DateTimeUtil.DATE_FORMAT;
+
 @Repository("jdbcUserRepository")
 public class JdbcUserRepository implements UserRepository {
 
@@ -41,7 +43,7 @@ public class JdbcUserRepository implements UserRepository {
                 .addValue("name", user.getName())
                 .addValue("email", user.getEmail())
                 .addValue("password", user.getPassword())
-                .addValue("registered", user.getRegistered())
+                .addValue("registered", DATE_FORMAT.format(user.getRegistered()))
                 .addValue("enabled", user.isEnabled())
                 .addValue("caloriesPerDay", user.getCaloriesPerDay());
 

@@ -1,16 +1,13 @@
 DROP TABLE IF EXISTS user_roles;
 DROP TABLE IF EXISTS users;
-DROP SEQUENCE IF EXISTS global_seq;
-
-CREATE SEQUENCE global_seq START WITH 100000;
 
 CREATE TABLE users
 (
-  id               INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
+  id               INTEGER PRIMARY KEY AUTOINCREMENT,
   name             VARCHAR                 NOT NULL,
   email            VARCHAR                 NOT NULL,
   password         VARCHAR                 NOT NULL,
-  registered       TIMESTAMP DEFAULT now() NOT NULL,
+  registered       TIMESTAMP DEFAULT (STRFTIME('%Y-%m-%d %H:%M:%f', 'NOW', 'localtime')) NOT NULL,
   enabled          BOOL DEFAULT TRUE       NOT NULL,
   calories_per_day INTEGER DEFAULT 2000    NOT NULL
 );

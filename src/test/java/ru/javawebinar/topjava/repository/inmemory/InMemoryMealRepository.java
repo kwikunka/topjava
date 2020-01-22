@@ -1,6 +1,7 @@
 package ru.javawebinar.topjava.repository.inmemory;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.test.context.ContextConfiguration;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.repository.MealRepository;
 import ru.javawebinar.topjava.util.MealsUtil;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 import static ru.javawebinar.topjava.UserTestData.ADMIN_ID;
 import static ru.javawebinar.topjava.UserTestData.USER_ID;
 
+@ContextConfiguration("classpath:spring/spring-app.xml")
 @Repository("inMemoryMealRepository")
 public class InMemoryMealRepository implements MealRepository {
 
