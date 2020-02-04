@@ -27,6 +27,11 @@
         <sqlite.version>3.28.0</sqlite.version>
         <!--    Tests  -->
         <junit.version>4.12</junit.version>
+
+        <!-- Hibernate -->
+        <hibernate.version>5.4.7.Final</hibernate.version>
+        <hibernate-validator.version>6.0.17.Final</hibernate-validator.version>
+        <javax-el.version>3.0.1-b11</javax-el.version>
     </properties>
 
     <build>
@@ -84,7 +89,7 @@
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-jdbc</artifactId>
+            <artifactId>spring-orm</artifactId>
             <version>${spring.version}</version>
         </dependency>
 
@@ -93,6 +98,32 @@
             <groupId>org.xerial</groupId>
             <artifactId>sqlite-jdbc</artifactId>
             <version>${sqlite.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <version>2.3.4</version>
+        </dependency>
+
+
+        <!--- ORM -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>${hibernate-validator.version}</version>
+        </dependency>
+
+        <!--http://hibernate.org/validator/documentation/getting-started/#unified-expression-language-el-->
+        <dependency>
+            <groupId>org.glassfish</groupId>
+            <artifactId>javax.el</artifactId>
+            <version>${javax-el.version}</version>
+            <scope>provided</scope>
         </dependency>
 
         <!--Web-->
@@ -137,7 +168,7 @@
                     <plugin>
                         <groupId>org.eclipse.jetty</groupId>
                         <artifactId>jetty-maven-plugin</artifactId>
-                        <version>9.2.19.v20160908</version>
+                        <version>9.4.9.v20180320</version>
                         <configuration>
                             <scanIntervalSeconds>10</scanIntervalSeconds>
                             <webApp>
