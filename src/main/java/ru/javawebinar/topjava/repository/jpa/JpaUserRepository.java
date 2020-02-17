@@ -48,7 +48,7 @@ public class JpaUserRepository implements UserRepository {
 
 /*      User ref = em.getReference(User.class, id);
         em.remove(ref);
-
+hibernate.dialect
         Query query = em.createQuery("DELETE FROM User u WHERE u.id=:id");
         return query.setParameter("id", id).executeUpdate() != 0;
 */

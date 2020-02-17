@@ -13,8 +13,6 @@ import ru.javawebinar.topjava.repository.UserRepository;
 
 import java.util.List;
 
-import static ru.javawebinar.topjava.util.DateTimeUtil.DATE_FORMAT;
-
 @Repository("jdbcUserRepository")
 public class JdbcUserRepository implements UserRepository {
 

@@ -1,6 +1,10 @@
 package ru.javawebinar.topjava.service;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import org.junit.rules.TestWatcher;
+import org.junit.runner.Description;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -22,8 +26,35 @@ import static ru.javawebinar.topjava.UserTestData.USER_ID;
         "classpath:spring/spring-db.xml"
 })
 @RunWith(SpringJUnit4ClassRunner.class)
-@Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
+@Sql(scripts = "classpath:db/initDB_sqlite.sql", config = @SqlConfig(encoding = "UTF-8"))
+@Sql(scripts = "classpath:db/populateDB_sqlite.sql", config = @SqlConfig(encoding = "UTF-8"))
 public class MealServiceTest {
+
+    @Rule
+    public TestWatcher watcher = new TestWatcher() {
+        @Override
+        protected void succeeded(Description description) {
+            super.succeeded(description);
+        }
+
+        @Override
+        protected void failed(Throwable e, Description description) {
+            super.failed(e, description);
+        }
+
+        @Override
+        protected void starting(Description description) {
+            super.starting(description);
+        }
+
+        @Override
+        protected void finished(Description description) {
+            super.finished(description);
+        }
+    };
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     @Autowired
     private MealService service;
@@ -34,13 +65,18 @@ public class MealServiceTest {
         assertMatch(service.getAll(USER_ID), MEAL6, MEAL5, MEAL4, MEAL3, MEAL2);
     }
 
-    @Test(expected = NotFoundException.class)
+    @Test
     public void deleteNotFound() throws Exception {
-        service.delete(1, USER_ID);
+        int id = 10;
+        thrown.expect(NotFoundException.class);
+        thrown.expectMessage("Not found entity with id=" + id);
+        service.delete(id, USER_ID);
     }
 
-    @Test(expected = NotFoundException.class)
+    @Test
     public void deleteNotOwn() throws Exception {
+        thrown.expect(NotFoundException.class);
+        thrown.expectMessage("Not found entity with id=" + MEAL1_ID);
         service.delete(MEAL1_ID, ADMIN_ID);
     }
 
@@ -59,13 +95,18 @@ public class MealServiceTest {
         assertMatch(actual, ADMIN_MEAL1);
     }
 
-    @Test(expected = NotFoundException.class)
+    @Test
     public void getNotFound() throws Exception {
-        service.get(1, USER_ID);
+        int id = 10;
+        thrown.expect(NotFoundException.class);
+        thrown.expectMessage("Not found entity with id=" + id);
+        service.get(id, USER_ID);
     }
 
-    @Test(expected = NotFoundException.class)
+    @Test
     public void getNotOwn() throws Exception {
+        thrown.expect(NotFoundException.class);
+        thrown.expectMessage("Not found entity with id=" + MEAL1_ID);
         service.get(MEAL1_ID, ADMIN_ID);
     }
 
@@ -76,9 +117,18 @@ public class MealServiceTest {
         assertMatch(service.get(MEAL1_ID, USER_ID), updated);
     }
 
-    @Test(expected = NotFoundException.class)
+    @Test
     public void updateNotFound() throws Exception {
+        thrown.expect(NotFoundException.class);
+        thrown.expectMessage("Not found entity with id=" + MEAL1.getId());
         service.update(MEAL1, ADMIN_ID);
+    }
+
+    @Test
+    public void updateNull() throws Exception {
+        thrown.expect(IllegalArgumentException.class);
+        thrown.expectMessage("meal must not be null");
+        service.update(null, ADMIN_ID);
     }
 
     @Test
@@ -89,7 +139,7 @@ public class MealServiceTest {
     @Test
     public void getBetween() throws Exception {
         assertMatch(service.getBetweenDates(
-                LocalDate.of(2015, Month.MAY, 30),
-                LocalDate.of(2015, Month.MAY, 30), USER_ID), MEAL3, MEAL2, MEAL1);
+                LocalDate.of(2020, Month.MAY, 30),
+                LocalDate.of(2020, Month.MAY, 30), USER_ID), MEAL3, MEAL2, MEAL1);
     }
 }
