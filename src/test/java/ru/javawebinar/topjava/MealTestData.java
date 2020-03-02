@@ -13,15 +13,15 @@ public class MealTestData {
     public static final int MEAL1_ID = START_SEQ;
     public static final int ADMIN_MEAL_ID = START_SEQ + 7;
 
-    public static final Meal MEAL1 = new Meal(MEAL1_ID, of(2015, Month.MAY, 30, 10, 0), "Завтрак", 500);
-    public static final Meal MEAL2 = new Meal(MEAL1_ID + 1, of(2015, Month.MAY, 30, 13, 0), "Обед", 1000);
-    public static final Meal MEAL3 = new Meal(MEAL1_ID + 2, of(2015, Month.MAY, 30, 20, 0), "Ужин", 500);
-    public static final Meal MEAL4 = new Meal(MEAL1_ID + 3, of(2015, Month.MAY, 31, 0, 0), "Еда на граничное значение", 100);
-    public static final Meal MEAL5 = new Meal(MEAL1_ID + 4, of(2015, Month.MAY, 31, 10, 0), "Завтрак", 500);
-    public static final Meal MEAL6 = new Meal(MEAL1_ID + 5, of(2015, Month.MAY, 31, 13, 0), "Обед", 1000);
-    public static final Meal MEAL7 = new Meal(MEAL1_ID + 6, of(2015, Month.MAY, 31, 20, 0), "Ужин", 510);
-    public static final Meal ADMIN_MEAL1 = new Meal(ADMIN_MEAL_ID, of(2015, Month.JUNE, 1, 14, 0), "Админ ланч", 510);
-    public static final Meal ADMIN_MEAL2 = new Meal(ADMIN_MEAL_ID + 1, of(2015, Month.JUNE, 1, 21, 0), "Админ ужин", 1500);
+    public static final Meal MEAL1 = new Meal(MEAL1_ID, of(2020, Month.MAY, 30, 17, 46, 40), "Завтрак", 500);
+    public static final Meal MEAL2 = new Meal(MEAL1_ID + 1, of(2020, Month.MAY, 30, 20, 33, 20), "Обед", 1000);
+    public static final Meal MEAL3 = new Meal(MEAL1_ID + 2, of(2020, Month.MAY, 30, 23, 20), "Ужин", 500);
+    public static final Meal MEAL4 = new Meal(MEAL1_ID + 3, of(2020, Month.MAY, 31, 2, 06, 40), "Завтрак", 1000);
+    public static final Meal MEAL5 = new Meal(MEAL1_ID + 4, of(2020, Month.MAY, 31, 4, 53, 20), "Обед", 500);
+    public static final Meal MEAL6 = new Meal(MEAL1_ID + 5, of(2020, Month.MAY, 31, 7, 40), "Ужин", 510);
+    public static final Meal MEAL7 = new Meal(MEAL1_ID + 6, of(2020, Month.MAY, 31, 9, 03, 20), "Еда на граничное значение", 100);
+    public static final Meal ADMIN_MEAL1 = new Meal(ADMIN_MEAL_ID, of(2020, Month.MAY, 31, 10, 26, 40), "Админ ланч", 510);
+    public static final Meal ADMIN_MEAL2 = new Meal(ADMIN_MEAL_ID + 1, of(2020, Month.MAY, 31, 13, 13, 20), "Админ ужин", 1500);
 
     public static final List<Meal> MEALS = List.of(MEAL7, MEAL6, MEAL5, MEAL4, MEAL3, MEAL2, MEAL1);
 

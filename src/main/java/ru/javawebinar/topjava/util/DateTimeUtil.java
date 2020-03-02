@@ -1,15 +1,15 @@
 package ru.javawebinar.topjava.util;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
 public class DateTimeUtil {
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+    public static final DateTimeFormatter DATETIME_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
     public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("YYYY-MM-DD HH:MM:SS.SSS");
+    public static final ZoneOffset ZONE_OFFSET = ZoneId.of("Europe/Moscow").getRules().getOffset(Instant.now());
 
     // HSQLDB doesn't support LocalDate.MIN/MAX
     private static final LocalDate MIN_DATE = LocalDate.of(1, 1, 1);

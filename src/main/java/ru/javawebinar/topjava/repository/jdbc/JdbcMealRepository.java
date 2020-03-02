@@ -12,11 +12,10 @@ import org.springframework.stereotype.Repository;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.repository.MealRepository;
 
-import java.time.LocalDate;
+import java.time.*;
 import java.util.List;
 
-import static ru.javawebinar.topjava.util.DateTimeUtil.getEndExclusive;
-import static ru.javawebinar.topjava.util.DateTimeUtil.getStartInclusive;
+import static ru.javawebinar.topjava.util.DateTimeUtil.*;
 
 @Repository("jdbcMealRepository")
 public class JdbcMealRepository implements MealRepository {
@@ -45,7 +44,7 @@ public class JdbcMealRepository implements MealRepository {
                 .addValue("id", meal.getId())
                 .addValue("description", meal.getDescription())
                 .addValue("calories", meal.getCalories())
-                .addValue("date_time", meal.getDateTime())
+                .addValue("date_time", DATETIME_FORMAT.format(meal.getDateTime()))
                 .addValue("user_id", userId);
 
         if (meal.isNew()) {
@@ -83,10 +82,12 @@ public class JdbcMealRepository implements MealRepository {
 
     @Override
     public List<Meal> getBetweenInclusive(LocalDate startDate, LocalDate endDate, int userId) {
-        startDate = (startDate == null ? LocalDate.MIN : startDate);
-        endDate = (endDate == null ? LocalDate.MAX : endDate);
+        LocalDateTime startDateTime = startDate == null ? LocalDateTime.of(1970, Month.JANUARY, 1, 0, 0) : getStartInclusive(startDate);
+        LocalDateTime finishDateTime= endDate == null ? LocalDateTime.of(3000, Month.DECEMBER, 31, 23, 59) : getEndExclusive(endDate);
+        String start = String.valueOf(startDateTime.toEpochSecond(ZONE_OFFSET) * 1000);
+        String finish = String.valueOf(finishDateTime.toEpochSecond(ZONE_OFFSET) * 1000);
         return jdbcTemplate.query(
         "SELECT * FROM meals WHERE user_id=? AND date_time >=? AND date_time < ? ORDER BY date_time DESC",
-                ROW_MAPPER, userId, getStartInclusive(startDate), getEndExclusive(endDate));
+                ROW_MAPPER, userId, start, finish);
     }
 }

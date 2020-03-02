@@ -19,12 +19,12 @@ public static String getActiveDbProfile() {
         return POSTGRES_DB;
     } catch (ClassNotFoundException ex) {
         try {
-            Class.forName("org.hsqldb.jdbcDriver");
-            return Profiles.HSQL_DB;
+            Class.forName("org.sqlite.JDBC");
+            return Profiles.SQLITE_DB;
         } catch (ClassNotFoundException e) {
             try {
-                Class.forName("org.sqlite.JDBC");
-                return Profiles.SQLITE_DB;
+                Class.forName("org.hsqldb.jdbcDriver");
+                return Profiles.HSQL_DB;
             } catch (ClassNotFoundException e1) {
                 throw new IllegalStateException("Could not find DB driver");
             }
